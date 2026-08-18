@@ -1,11 +1,11 @@
 # URL Shortener 🚀
 
-Projeto prático de **System Design** para construir um encurtador de URLs que evolui gradativamente para suportar de 1 até 1.000.000+ de usuários.
+Practical System Design project to build a URL shortener that gradually evolves to support from 1 up to 1,000,000+ users.
 
-## 📈 Evolução da Arquitetura
+## 📈 Architecture Evolution
 
-O sistema cresce em 3 fases principais:
+The system grows in 3 main phases:
 
-1. **Fase 1 (MVP - até 1k usuários):** API Básica + Banco Relacional. Foco no algoritmo Base62 e estrutura do banco.
-2. **Fase 2 (10k a 100k usuários):** Adição de Load Balancer, Múltiplas Instâncias da API e Cache (Redis).
-3. **Fase 3 (1M+ usuários):** Read Replicas no Banco, Serviço Distribuído de IDs e Rate Limiter.
+* **Phase 1 (MVP - up to 1k users):** Basic API + Relational Database. Focus on the Base62 algorithm and database structure.
+* **Phase 2 (10k to 100k users):** Addition of a Load Balancer, Multiple API Instances, and Cache (Redis).
+* **Phase 3 (1M+ users):** Database Read Replicas, Distributed ID Service, and Rate Limiter.
