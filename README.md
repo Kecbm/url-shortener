@@ -36,3 +36,11 @@ The system grows in 3 main phases:
 - [ ] Set up Database Read Replicas.
 - [ ] Implement a Distributed ID Generation Service.
 - [ ] Implement Rate Limiting.
+
+---
+
+## 👤 Author
+
+Project developed by [Klecianny Melo](https://kecbm.vercel.app/) 👩🏾‍💻 
+
+If you liked this project, give it a ⭐ and feel free to reach out!
