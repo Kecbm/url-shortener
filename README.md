@@ -41,6 +41,10 @@ The system grows in 3 main phases:
 
 ## 👤 Author
 
-Project developed by [Klecianny Melo](https://kecbm.vercel.app/) 👩🏾‍💻 
+<div align="center">
+  Project developed by <a href="https://kecbm.vercel.app/" target="_blank">Klecianny Melo</a> 👩🏾‍💻 
+</div>
+
+</br>
 
 If you liked this project, give it a ⭐ and feel free to reach out!
