@@ -12,20 +12,20 @@ The system grows in 3 main phases:
 
 ## 🛠️ Tech Stack
 
-* **Backend:** Python (FastAPI or Django)
-* **Main Database:** PostgreSQL
+* **Backend:** Python (FastAPI and Django)
+* **Main Database:** SQLite, PostgreSQL
 * **Cache & Proxy:** Redis, Nginx
 * **Infrastructure:** Docker & Docker Compose
 
 ## 🗺️ Development Roadmap
 
 ### 🟢 Phase 1: MVP (Up to 1,000 users)
-- [ ] **Task 1: Setup (1h):** Create a virtual environment (`venv`), install the web framework, and run a "Hello World" route.
-- [ ] **Task 2: Database (1h):** Spin up PostgreSQL via Docker, connect the application, and create the main table (`id`, `original_url`, `short_hash`).
-- [ ] **Task 3: Algorithm (1h):** Create a function that converts an integer (database ID) to Base62.
-- [ ] **Task 4: Creation Route (1h):** Create a `POST` endpoint (receives URL, saves to the DB, generates Base62, and returns the short link).
-- [ ] **Task 5: Redirect Route (1h):** Create a `GET` endpoint (receives hash, searches for the URL in the DB, and performs a 301/302 redirect).
-- [ ] **Task 6: Validation (1h):** Validate the received URL, prevent duplicate links, and test the API.
+- [ ] **Task 1: Setup (1h):** Create a virtual environment (`venv`), install FastAPI, and run a basic "Hello World".
+- [ ] **Task 2: Database (1h):** Set up a local **SQLite** database and create the main table (`id`, `original_url`, `short_hash`).
+- [ ] **Task 3: Algorithm (1h):** Create a standard Python function that converts an integer to Base62.
+- [ ] **Task 4: Creation Route (1h):** Create a `POST` endpoint that receives a URL, saves it to SQLite, generates the Base62 hash, and returns the short link.
+- [ ] **Task 5: Redirect Route (1h):** Create a `GET` endpoint that receives the hash, queries SQLite, and performs a 301/302 redirect.
+- [ ] **Task 6: Validation (1h):** Add basic string validation for the URL and logic to prevent saving duplicate links.
 
 ### 🟡 Phase 2: The First Bottleneck (10k to 100k users)
 - [ ] Dockerize the application.
