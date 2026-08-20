@@ -21,6 +21,18 @@ The system grows in 3 main phases:
 
 ### 🟢 Phase 1: MVP (Up to 1,000 users)
 - [x] **Task 1: Setup:** Create a virtual environment (`venv`), install FastAPI, and run a basic "Hello World".
+
+```bash
+# Create the environment
+python -m venv venv
+
+# Active the environment
+source venv/bin/activate
+
+# Run the server
+fastapi dev main.py
+```
+
 - [ ] **Task 2: Database (1h):** Set up a local **SQLite** database and create the main table (`id`, `original_url`, `short_hash`).
 - [ ] **Task 3: Algorithm (1h):** Create a standard Python function that converts an integer to Base62.
 - [ ] **Task 4: Creation Route (1h):** Create a `POST` endpoint that receives a URL, saves it to SQLite, generates the Base62 hash, and returns the short link.
