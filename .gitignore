@@ -7,3 +7,7 @@ env/
 __pycache__/
 *.py[cod]
 *$py.class
+
+# Ignorar bancos de dados locais do SQLite
+*.db
+*.sqlite3
