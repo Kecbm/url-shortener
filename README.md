@@ -33,14 +33,20 @@ source venv/bin/activate
 fastapi dev main.py
 ```
 
-- [x] **Task 2: Database (1h):** Set up a local **SQLite** database and create the main table (`id`, `original_url`, `short_hash`).
+- [x] **Task 2: Database:** Set up a local **SQLite** database and create the main table (`id`, `original_url`, `short_hash`).
 
 ```bash
 # Init db
 python database.py
 ```
 
-- [ ] **Task 3: Algorithm (1h):** Create a standard Python function that converts an integer to Base62.
+- [x] **Task 3: Algorithm:** Create a standard Python function that converts an integer to Base62.
+
+```bash
+# Execute the function
+python base62.py
+```
+
 - [ ] **Task 4: Creation Route (1h):** Create a `POST` endpoint that receives a URL, saves it to SQLite, generates the Base62 hash, and returns the short link.
 - [ ] **Task 5: Redirect Route (1h):** Create a `GET` endpoint that receives the hash, queries SQLite, and performs a 301/302 redirect.
 - [ ] **Task 6: Validation (1h):** Add basic string validation for the URL and logic to prevent saving duplicate links.
