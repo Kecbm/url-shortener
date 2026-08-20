@@ -33,7 +33,7 @@ source venv/bin/activate
 fastapi dev main.py
 ```
 
-- [ ] **Task 2: Database (1h):** Set up a local **SQLite** database and create the main table (`id`, `original_url`, `short_hash`).
+- [x] **Task 2: Database (1h):** Set up a local **SQLite** database and create the main table (`id`, `original_url`, `short_hash`).
 
 ```bash
 # Init db
