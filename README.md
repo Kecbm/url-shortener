@@ -6,9 +6,9 @@ Practical **System Design** project to build a URL shortener that gradually evol
 
 The system grows in 3 main phases:
 
-1. **Phase 1 (MVP - up to 1k users):** Basic API + Relational Database. Focus on the Base62 algorithm and database structure.
-2. **Phase 2 (10k to 100k users):** Addition of a Load Balancer, Multiple API Instances, and Cache (Redis).
-3. **Phase 3 (1M+ users):** Database Read Replicas, Distributed ID Service, and Rate Limiter.
+1. **[Phase 1 (MVP - up to 1k users)](./1_mvp/):** Basic API + Relational Database. Focus on the Base62 algorithm and database structure.
+2. **[Phase 2 (10k to 100k users)](./2_caching/):** Addition of a Load Balancer, Multiple API Instances, and Cache (Redis).
+3. **[Phase 3 (1M+ users)](./3_scale/):** Database Read Replicas, Distributed ID Service, and Rate Limiter.
 
 ## 🛠️ Tech Stack
 
