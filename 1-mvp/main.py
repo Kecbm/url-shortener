@@ -1,6 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import RedirectResponse
-from pydantic import BaseModel
+from pydantic import BaseModel, HttpUrl
 import sqlite3
 from base62 import encode
 
@@ -8,7 +8,8 @@ app = FastAPI(title="URL Shortener MVP")
 
 # Define the JSON format for the API will be recived
 class URLRequest(BaseModel):
-    url: str
+    # url: str
+    url: HttpUrl
 
 @app.get("/")
 def read_root():
@@ -16,19 +17,31 @@ def read_root():
 
 @app.post("/shorten")
 def create_short_url(request: URLRequest):
-    # 1. Connect to the local db
+    target_url = str(request.url)
+    # Connect to the local db
     conn = sqlite3.connect("shortener.db")
     cursor = conn.cursor()
 
     try:
-        # 2. Save the original url and get the id generate automatically
+        # Verification: the url alredy exists?
+        cursor.execute("SELECT short_hash FROM urls WHERE original_url = ?", (target_url,))
+        existing_hash = cursor.fetchone()
+
+        if existing_hash:
+            # Return the saved link
+            return {
+                "original_url": target_url,
+                "short_url": f"http://127.0.0.1:8000/{existing_hash[0]}"
+            }
+
+        # If thr url is new, save the original url and get the id generate automatically
         cursor.execute("INSERT INTO urls (original_url) VALUES (?)", (request.url,))
         url_id = cursor.lastrowid
 
-        # 3. Transform the id in a Base62 hash
+        # Transform the id in a Base62 hash
         short_hash = encode(url_id)
 
-        # 4. Refresh db, saving the hash with the original url
+        # Refresh db, saving the hash with the original url
         cursor.execute("UPDATE urls SET short_hash = ? WHERE id = ?", (short_hash, url_id))
         conn.commit()
 
@@ -36,10 +49,10 @@ def create_short_url(request: URLRequest):
         conn.rollback()
         raise HTTPException(status_code=500, detail="Internal server error.")
     finally:
-        # 5. Closes the connection to avoid locking the db
+        # Closes the connection to avoid locking the db
         conn.close()
 
-    # 6. Send the response with the link ready for use
+    # Send the response with the link ready for use
     return {
         "original_url": request.url,
         "short_url": f"http://127.0.0.1:8000/{short_hash}"
