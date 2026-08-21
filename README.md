@@ -49,9 +49,10 @@ python base62.py
 
 - [x] **Task 4: Creation Route:** Create a `POST` endpoint that receives a URL, saves it to SQLite, generates the Base62 hash, and returns the short link.
 - [x] **Task 5: Redirect Route (1h):** Create a `GET` endpoint that receives the hash, queries SQLite, and performs a 301/302 redirect.
-- [ ] **Task 6: Validation (1h):** Add basic string validation for the URL and logic to prevent saving duplicate links.
+- [x] **Task 6: Validation (1h):** Add basic string validation for the URL and logic to prevent saving duplicate links.
 - [ ] **Task 7:** Validar que a url que o usuário envia é uma url válida
 
+- [ ] **Task: 8 (1h):** Desenho da arquitetura no Scalidraw
 - [ ] **Task: Frontend (1h):** Validate the option of creating a frontend to group the three stages of the study project
 
 ### 🟡 Phase 2: The First Bottleneck (10k to 100k users)
