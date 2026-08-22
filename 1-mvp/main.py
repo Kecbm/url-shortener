@@ -35,7 +35,7 @@ def create_short_url(request: URLRequest):
             }
 
         # If thr url is new, save the original url and get the id generate automatically
-        cursor.execute("INSERT INTO urls (original_url) VALUES (?)", (request.url,))
+        cursor.execute("INSERT INTO urls (original_url) VALUES (?)", (target_url,))
         url_id = cursor.lastrowid
 
         # Transform the id in a Base62 hash
@@ -47,7 +47,7 @@ def create_short_url(request: URLRequest):
 
     except Exception as e:
         conn.rollback()
-        raise HTTPException(status_code=500, detail="Internal server error.")
+        raise HTTPException(status_code=500, detail="Internal server error: {e}")
     finally:
         # Closes the connection to avoid locking the db
         conn.close()
