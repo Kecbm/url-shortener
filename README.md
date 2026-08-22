@@ -48,22 +48,26 @@ python base62.py
 ```
 
 - [x] **Task 4: Creation Route:** Create a `POST` endpoint that receives a URL, saves it to SQLite, generates the Base62 hash, and returns the short link.
-- [x] **Task 5: Redirect Route (1h):** Create a `GET` endpoint that receives the hash, queries SQLite, and performs a 301/302 redirect.
-- [x] **Task 6: Validation (1h):** Add basic string validation for the URL and logic to prevent saving duplicate links.
-- [ ] **Task 7:** Validar que a url que o usuário envia é uma url válida
+- [x] **Task 5: Redirect Route** Create a `GET` endpoint that receives the hash, queries SQLite, and performs a 301/302 redirect.
+- [x] **Task 6: Validation** Add basic string validation for the URL and logic to prevent saving duplicate links.
+- [x] **Task 7:** Validar que a url que o usuário envia é uma url válida
 
-- [ ] **Task: 8 (1h):** Desenho da arquitetura no Scalidraw
-- [ ] **Task: Frontend (1h):** Validate the option of creating a frontend to group the three stages of the study project
+- [ ] **Task: 9** Desenhar a arquitetura no Scalidraw
+- [ ] **Task: Frontend** Validate the option of creating a frontend to group the three stages of the study project
 
 ### 🟡 Phase 2: The First Bottleneck (10k to 100k users)
 - [ ] Dockerize the application.
 - [ ] Add Nginx as a Load Balancer.
 - [ ] Integrate Redis for URL caching.
+...
+- [ ] Desenho da arquitetura no Scalidraw, considerando as seguintes cores: azul ação de request, laranja validação, verde retorno sucesso, roxo banco de dados, vermelho erro.
 
 ### 🔴 Phase 3: Massive Scale (1M+ users)
 - [ ] Set up Database Read Replicas.
 - [ ] Implement a Distributed ID Generation Service.
 - [ ] Implement Rate Limiting.
+...
+- [ ] Desenho da arquitetura no Scalidraw, considerando as seguintes cores: azul ação de request, laranja validação, verde retorno sucesso, roxo banco de dados, vermelho erro.
 
 ---
 
