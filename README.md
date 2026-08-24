@@ -20,8 +20,6 @@ The system grows in 3 main phases:
 ## 🗺️ Development Roadmap
 
 ### 🟢 Phase 1: MVP (Up to 1,000 users)
-- [x] **Task 1: Setup:** Create a virtual environment (`venv`), install FastAPI, and run a basic "Hello World".
-
 ```bash
 # Create the environment
 python -m venv venv
@@ -31,43 +29,50 @@ source venv/bin/activate
 
 # Run the server
 fastapi dev main.py
-```
 
-- [x] **Task 2: Database:** Set up a local **SQLite** database and create the main table (`id`, `original_url`, `short_hash`).
-
-```bash
 # Init db
 python database.py
-```
 
-- [x] **Task 3: Algorithm:** Create a standard Python function that converts an integer to Base62.
-
-```bash
 # Execute the function
 python base62.py
 ```
 
-- [x] **Task 4: Creation Route:** Create a `POST` endpoint that receives a URL, saves it to SQLite, generates the Base62 hash, and returns the short link.
-- [x] **Task 5: Redirect Route** Create a `GET` endpoint that receives the hash, queries SQLite, and performs a 301/302 redirect.
-- [x] **Task 6: Validation** Add basic string validation for the URL and logic to prevent saving duplicate links.
-- [x] **Task 7:** Validar que a url que o usuário envia é uma url válida
-
-- [ ] **Task: 9** Desenhar a arquitetura no Scalidraw
-- [ ] **Task: Frontend** Validate the option of creating a frontend to group the three stages of the study project
-
 ### 🟡 Phase 2: The First Bottleneck (10k to 100k users)
-- [ ] Dockerize the application.
-- [ ] Add Nginx as a Load Balancer.
-- [ ] Integrate Redis for URL caching.
+- [ ] **Task 1: SLO Metrics & Middleware (1h):** Implement FastAPI middleware to log request latency, establishing the baseline to measure our P95 (<400ms) and P99 (<150ms) targets.
+- [ ] **Task 2: Dependencies & Env Vars (1h):** Update `requirements.txt` (add `psycopg2-binary`, `redis`, `python-dotenv`, and an HTTP load testing tool like `locust`) and setup the `.env` file.
+- [ ] **Task 3: PostgreSQL Migration (1h):** Replace `sqlite3` with `psycopg2` in `main.py`, explicitly configuring connection timeouts to ensure fast failures and maintain system availability.
+- [ ] **Task 4: Resilient Redis Caching (1h):** Connect to Redis for the `GET` route to handle the 99% read traffic, ensuring a graceful fallback to the DB if the cache server goes down.
+- [ ] **Task 5: API Dockerfile (1h):** Create a `Dockerfile` at the root of the project to package the Python code and FastAPI into a standardized image.
+- [ ] **Task 6: Docker Compose Infrastructure (1h):** Create a `docker-compose.yml` file to spin up `postgres`, `redis`, and configure 2 simultaneous replicas of the FastAPI application.
+- [ ] **Task 7: Nginx Load Balancer (1h):** Create an `nginx.conf` file to distribute traffic across the API replicas, adding the Nginx service to Docker Compose.
+- [ ] **Task 8: Load Testing & SLO Verification (1h):** Use Locust to simulate concurrent user traffic (high RPS), verifying if the system sustains the load while meeting the defined latency SLOs.
 ...
-- [ ] Desenho da arquitetura no Scalidraw, considerando as seguintes cores: azul ação de request, laranja validação, verde retorno sucesso, roxo banco de dados, vermelho erro.
+- [ ] Desenho da arquitetura no Scalidraw, seguindo o padrão da imagem do mvp, focando nas rotas e insert e select separados na parte do db
 
 ### 🔴 Phase 3: Massive Scale (1M+ users)
-- [ ] Set up Database Read Replicas.
-- [ ] Implement a Distributed ID Generation Service.
-- [ ] Implement Rate Limiting.
+- [ ] **Task 1: Redis Rate Limiter (1h):** Implement a Token Bucket algorithm middleware using Redis to limit the number of `POST /shorten` requests per IP, preventing abuse and DDoS attacks.
+- [ ] **Task 2: Distributed ID Generator (1h):** Replace the PostgreSQL `AUTOINCREMENT` with a highly available ID generation strategy (e.g., a Redis-backed Ticket Server or Snowflake algorithm) to remove the write bottleneck.
+- [ ] **Task 3: PostgreSQL Replication (Infra) (1h):** Update the `docker-compose.yml` to deploy a PostgreSQL Master-Slave architecture, separating write nodes from read nodes.
+- [ ] **Task 4: Read/Write Split Routing (1h):** Refactor the API database logic to route all `INSERT` operations to the Master DB and all `SELECT` operations to the Read Replica DB.
+- [ ] **Task 5: Replication Lag Mitigation (1h):** Implement a fallback mechanism (Eventual Consistency handling) where if a freshly created link is not yet found in the Read Replica, the API temporarily checks the cache or Master DB.
+- [ ] **Task 6: Stress Testing & Tuning (1h):** Run intensive load tests using Locust to simulate massive traffic spikes, verifying the rate limiter's effectiveness and ensuring the Read Replicas maintain the P99 < 150ms SLO.
 ...
-- [ ] Desenho da arquitetura no Scalidraw, considerando as seguintes cores: azul ação de request, laranja validação, verde retorno sucesso, roxo banco de dados, vermelho erro.
+- [ ] Desenho da arquitetura no Scalidraw, seguindo o padrão da imagem do mvp, focando nas rotas e insert e select separados na parte do db
+
+### 🏗️ Architectural Evolution and Trade-offs
+
+**Phase 1: MVP and Validation (Up to 1k users)**
+The project's architecture was intentionally designed to balance delivery speed and product validation. In this initial stage, we prioritized simplicity and local consistency using SQLite. Our focus was on correctly structuring the shortening algorithm (Base62) and the redirection logic, without adding premature infrastructure complexity.
+
+![MVP data flow diagram](assets/mvp.jpeg)
+
+- TODO: Vídeo about use the MVP
+
+**Phase 2: High Availability and SLOs (10k to 100k users)**
+To support the first major traffic leap and respect our latency SLOs (P99 < 150ms for redirects), the infrastructure evolved into a distributed environment. We migrated to PostgreSQL to ensure safe concurrency, introduced Redis as a resilient caching layer to absorb the 99% read traffic, and adopted Nginx as a Load Balancer to orchestrate multiple Docker-containerized API instances.
+
+**Phase 3: Global Scale (1M+ users)**
+Facing massive traffic, we embraced eventual consistency to protect the system's integrity. We implemented database read replicas (Read/Write Split) to distribute the load, adopted a distributed ID generator to remove the primary database bottleneck, and shielded the API with a Redis-based Rate Limiter to prevent abuse, ensuring the application's continuous resilience.
 
 ---
 
