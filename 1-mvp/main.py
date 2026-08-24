@@ -11,10 +11,6 @@ class URLRequest(BaseModel):
     # url: str
     url: HttpUrl
 
-@app.get("/")
-def read_root():
-    return{"message": "Say hi to URL Shortner MVP!"}
-
 @app.post("/shorten")
 def create_short_url(request: URLRequest):
     target_url = str(request.url)
