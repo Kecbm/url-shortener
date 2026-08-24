@@ -1,13 +1,12 @@
-# Ambientes Virtuais
 venv/
 env/
 .env
 
-# Arquivos de Cache do Python
 __pycache__/
 *.py[cod]
 *$py.class
 
-# Ignorar bancos de dados locais do SQLite
 *.db
 *.sqlite3
+
+.DS_Store
