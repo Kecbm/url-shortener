@@ -87,8 +87,6 @@ Facing massive traffic, we embraced eventual consistency to protect the system's
 
 A special thanks to my mentor, [Luke Berry](https://github.com/LukeberryPi), for the continuous guidance and for pushing me to be a better engineer. I also want to give a huge shoutout to [Jessica Felix](https://github.com/jessilyneh) for the invaluable architectural insights and support throughout this project's evolution. This system wouldn't be the same without you both!
 
-TODO: Ver as recomendações da Jes no Twitter e implementar para a fase 2 e 3
-
 ---
 
 ## 👤 Author
