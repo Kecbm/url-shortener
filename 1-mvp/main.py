@@ -1,15 +1,26 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import RedirectResponse
+from fastapi.openapi.docs import get_swagger_ui_html
 from pydantic import BaseModel, HttpUrl
 import sqlite3
 from base62 import encode
 
 app = FastAPI(title="URL Shortener MVP")
+app = FastAPI(docs_url=None)
 
 # Define the JSON format for the API will be recived
 class URLRequest(BaseModel):
     # url: str
     url: HttpUrl
+
+@app.get("/docs", include_in_schema=False)
+async def custom_swagger_ui_html():
+    return get_swagger_ui_html(
+        openapi_url=app.openapi_url,
+        title=app.title + " - Documentation",
+        oauth2_redirect_url=app.swagger_ui_oauth2_redirect_url,
+        swagger_ui_parameters={"defaultModelsExpandDepth": -1} # Delete Schemas
+    )
 
 @app.post("/shorten")
 def create_short_url(request: URLRequest):
