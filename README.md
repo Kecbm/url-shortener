@@ -75,7 +75,7 @@ The project's architecture was intentionally designed to balance delivery speed 
 
 ![MVP data flow diagram](assets/mvp.jpeg)
 
-- TODO: Vídeo about use the MVP
+![Working MVP demonstration](/assets/mvp.gif)
 
 **Phase 2: High Availability and SLOs (10k to 100k users)**
 To support the first major traffic leap and respect our latency SLOs (P99 < 150ms for redirects), the infrastructure evolved into a distributed environment. We migrated to PostgreSQL to ensure safe concurrency, introduced Redis as a resilient caching layer to absorb the 99% read traffic, and adopted Nginx as a Load Balancer to orchestrate multiple Docker-containerized API instances.
