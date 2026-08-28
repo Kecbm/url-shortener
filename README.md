@@ -37,6 +37,9 @@ source venv/bin/activate
 # Run the server
 fastapi dev main.py
 
+# Install dependences
+pip install -r requirements.txt
+
 # Init db
 python database.py
 
@@ -45,7 +48,12 @@ python base62.py
 ```
 
 ### 🟡 Phase 2: The First Bottleneck (10k to 100k users)
-- [ ] **Task 1: Baseline Benchmark & ADR Setup (1h):** Run an initial load test (e.g., using Locust) on the current MVP to capture "before" screenshots of latency and throughput. Create the `docs/adrs/` directory and draft `ADR-001` (PostgreSQL migration).
+
+```bash
+locust
+```
+
+- [x] **Task 1: Baseline Benchmark & ADR Setup:** Run an initial load test (e.g., using Locust) on the current MVP to capture "before" screenshots of latency and throughput. Create the `docs/adrs/` directory and draft `ADR-001` (PostgreSQL migration).
 - [ ] **Task 2: SLO Metrics & Middleware (1h):** Implement FastAPI middleware to log request latency, allowing us to actively measure our P95 (<400ms) and P99 (<150ms) targets.
 - [ ] **Task 3: Dependencies & Env Vars (1h):** Update `requirements.txt` (add `psycopg2-binary`, `redis`, `python-dotenv`, `locust`) and setup the `.env` file for credentials.
 - [ ] **Task 4: PostgreSQL Migration (1h):** Replace `sqlite3` with `psycopg2` in `main.py`, explicitly configuring connection timeouts to ensure fast failures.
@@ -73,9 +81,9 @@ python base62.py
 **Phase 1: MVP and Validation (Up to 1k users)**
 The project's architecture was intentionally designed to balance delivery speed and product validation. In this initial stage, we prioritized simplicity and local consistency using SQLite. Our focus was on correctly structuring the shortening algorithm (Base62) and the redirection logic, without adding premature infrastructure complexity.
 
-![MVP data flow diagram](assets/mvp.jpeg)
+![MVP data flow diagram](docs/assets/mvp.jpeg)
 
-![Working MVP demonstration](/assets/mvp.gif)
+![Working MVP demonstration](docs/assets/mvp.gif)
 
 **Phase 2: High Availability and SLOs (10k to 100k users)**
 To support the first major traffic leap and respect our latency SLOs (P99 < 150ms for redirects), the infrastructure evolved into a distributed environment. We migrated to PostgreSQL to ensure safe concurrency, introduced Redis as a resilient caching layer to absorb the 99% read traffic, and adopted Nginx as a Load Balancer to orchestrate multiple Docker-containerized API instances.
